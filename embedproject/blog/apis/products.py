@@ -1,26 +1,26 @@
 from rest_framework import status
-from rest_framework_response import Response
-from rest_framework_views import APIView
+from rest_framework.response import Response
+from rest_framework.views import APIView
 from rest_framework import serializers
 
-from embedproject.api.paginations import LimitOffsetPagination
+from embedproject.api.pagination import LimitOffsetPagination
 
 from embedproject.blog.models import Product
 from embedproject.blog.services.products import create_product
-from embedproject.blog.selectors.products import get_product
+from embedproject.blog.selectors.products import get_products
 
 class ProductApi(APIView):
 
-	class Pagination(LimitOsetPagination):
+	class Pagination(LimitOffsetPagination):
 		default_limit = 15
 
 	class InputSerializer(serializers.Serializer):
 		name = serializers.CharField(max_length=255)
 
-	class InputSerializer(serializers.ModelSerializer):
+	class OutPutSerializer(serializers.ModelSerializer):
 
 		class Meta:
-			models = product
+			models = Product
 			fields = ("name", "created_at", "updated_at")
 
 	def post(self, request):

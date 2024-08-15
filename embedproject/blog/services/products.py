@@ -1,5 +1,6 @@
 from django.db.models import QuerySet
-from embedproject.blog.models import Prod
+from embedproject.blog.models import Product
+
 
 def create_product(name: str) -> QuerySet[Product]:
 	return Product.object.create(name=name)
