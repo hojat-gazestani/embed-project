@@ -3,4 +3,4 @@ from embedproject.blog.models import Product
 
 
 def get_products() -> QuerySet[Product]:
-	return Product.object.all()
+	return Product.objects.all()

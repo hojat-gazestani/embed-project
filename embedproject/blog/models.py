@@ -1,5 +1,5 @@
 from django.db import models
-from  embedproject.common.models  import BaseModel
+from embedproject.common.models import BaseModel
 
 
 class Product(BaseModel):

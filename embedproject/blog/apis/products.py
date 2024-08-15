@@ -9,6 +9,9 @@ from embedproject.blog.models import Product
 from embedproject.blog.services.products import create_product
 from embedproject.blog.selectors.products import get_products
 
+from drf_spectacular.utils import extend_schema
+
+
 class ProductApi(APIView):
 
 	class Pagination(LimitOffsetPagination):
@@ -20,22 +23,24 @@ class ProductApi(APIView):
 	class OutPutSerializer(serializers.ModelSerializer):
 
 		class Meta:
-			models = Product
+			model = Product
 			fields = ("name", "created_at", "updated_at")
 
+	@extend_schema(request=InputSerializer, responses=OutPutSerializer)
 	def post(self, request):
-		serializer = self.InputSerializer(data=request)
+		serializer = self.InputSerializer(data=request.data)
 		serializer.is_valid(raise_exception=True)
 		try:
 			query = create_product(name=serializer.validated_data.get("name"))
 		except Exception as ex:
 			return Response(
-				"Database Error {ex}",
+				f"Database Error {ex}",
 				status=status.HTTP_400_BAD_REQUEST
 				)
 		return Response(self.OutPutSerializer(query, context={"request": request}).data)
 
-	def get(set, request):
+	@extend_schema(responses=OutPutSerializer)
+	def get(self, request):
 		query = get_products()
 		return Response(self.OutPutSerializer(query, context={"request": request}, many=True).data)
 
