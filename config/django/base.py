@@ -19,6 +19,7 @@ LOCAL_APPS = [
     'embedproject.users.apps.UsersConfig',
     'embedproject.authentication.apps.AuthenticationConfig',
     'embedproject.blog.apps.BlogConfig',
+    'embedproject.users.apps.UsersConfig',
 ]
 
 THIRD_PARTY_APPS = [
